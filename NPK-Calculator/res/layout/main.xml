@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/relLayout"
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -38,7 +38,8 @@
             <RadioButton
             	android:id="@+id/cropLengthEarly"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"                    
+                android:layout_height="wrap_content"
+                android:checked="true"                    
                 android:text="@string/crop_length_early" />
 
             <RadioButton
@@ -59,6 +60,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/manureCreditsPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/manure_credits_prompt" />
+
+            <CheckBox
+                android:id="@+id/manureCreditsCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/manureTypePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manure_type_prompt"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/manureTypeSpn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/manureAmountPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/manure_amount_prompt" />
+
+        <EditText
+            android:id="@+id/manureAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="6"
+            android:inputType="numberDecimal"
+            android:visibility="gone" >
+
+            <requestFocus />
+        </EditText>
 
         <TextView
             android:id="@+id/prevCropPrompt"
@@ -87,7 +142,8 @@
             <RadioButton
                 android:id="@+id/poorBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"                
+                android:layout_height="wrap_content"
+                android:checked="true"                
                 android:text="@string/poor_btn" />
 
             <RadioButton
@@ -119,7 +175,8 @@
             <RadioButton
                 android:id="@+id/lessOrganicBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"                
+                android:layout_height="wrap_content"
+                android:checked="true"                
                 android:text="@string/less_organic_btn" />
 
             <RadioButton

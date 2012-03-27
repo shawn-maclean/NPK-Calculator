@@ -7,6 +7,9 @@
     <string name="crop_length_early">Early/seed</string>
     <string name="crop_length_full">Full season</string>
     <string name="crop_sown_prompt">When will the crop be planted?</string>
+    <string name="manure_credits_prompt">Will you be applying manure?</string>
+    <string name="manure_type_prompt">What type of manure will you apply?</string>
+    <string name="manure_amount_prompt">How much manure will you apply?</string>
     <string name="prev_crop_prompt">What crop was sown previously?</string>
     <string name="prev_crop_stand_prompt">How would you rate the previous crop stand?</string>
     <string name="poor_btn">Poor</string>
@@ -122,7 +125,16 @@
 	    <item>M+</item>
 	    <item>H</item>
 	    <item>H+</item>
-	</string-array>		
+	</string-array>
+	
+	<string-array name="manureTypes">
+	    <item>Swine - Liquid (gal/ac)</item>
+	    <item>Swine - Solid (ton/ac)</item>
+	    <item>Dairy - Liquid (gal/ac)</item>
+	    <item>Dairy - Solid (ton/ac)</item>
+	    <item>Poultry - Liquid (gal/ac)</item>
+	    <item>Poultry - Solid (ton/ac)</item>
+	</string-array>    		
 	
 </resources>
 

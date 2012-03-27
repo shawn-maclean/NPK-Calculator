@@ -6,5 +6,35 @@
     <string name="crop_length_prompt">Will this be an early/seed or full season crop?</string>
     <string name="crop_length_early">Early/seed</string>
     <string name="crop_length_full">Full season</string>
-
+    <string name="crop_sown_prompt">When will the crop be planted?</string>
+    <string name="prev_crop_prompt">What crop was sown previously?</string>
+    <string name="prev_crop_stand_prompt">How would you rate the previous crop stand?</string>
+    <string name="poor_btn">Poor</string>
+    <string name="fair_btn">Fair</string>
+    <string name="good_btn">Good</string>
+    <string name="organic_matter_prompt">What is the organic matter level of your soil?</string>
+    <string name="less_organic_btn">Less than 3.5%</string>
+	<string name="more_organic_btn">3.5% or more</string>
+	<string-array name="cropsToSelect">
+	    <item>Barley</item>
+	    <item>Bean</item>
+	    <item>Beet</item>
+	    <item>Blueberry</item>
+	    <item>Broccoli</item>
+	    <item>Brussel Sprouts</item>
+	    <item>Buckwheat</item>
+	    <item>Cabbage</item>
+	    <item>Carrot</item>
+	    <item>Cauliflower</item>
+	    <item>Celery</item>
+	    <item>Cereal</item>
+	    <item>Cole crop</item>
+	    <item>Coniferous</item>
+	    <item>Corn</item>
+	    <item>Cranberry</item>
+	    <item>Cucumber</item>
+	    <item>Deciduous</item>
+	</string-array>
+	
+	
 </resources>

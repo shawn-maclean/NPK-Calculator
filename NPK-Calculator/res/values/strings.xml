@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   
+    <string name="app_name">NPK-Calculator</string>
+    <string name="crop_prompt">Please select a crop:</string>
+    <string name="crop_length_prompt">Will this be an early/seed or full season crop?</string>
+    <string name="crop_length_early">Early/seed</string>
+    <string name="crop_length_full">Full season</string>
+
+</resources>

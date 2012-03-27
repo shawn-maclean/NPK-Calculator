@@ -19,9 +19,8 @@
 
         <Spinner
             android:id="@+id/cropSelectionSpn"
-            android:layout_width="wrap_content"
-            android:layout_height="0dip"
-            android:layout_weight="1" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         
         <TextView
             android:id="@+id/cropLengthPrompt"
@@ -88,8 +87,7 @@
             <RadioButton
                 android:id="@+id/poorBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
+                android:layout_height="wrap_content"                
                 android:text="@string/poor_btn" />
 
             <RadioButton
@@ -121,8 +119,7 @@
             <RadioButton
                 android:id="@+id/lessOrganicBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
+                android:layout_height="wrap_content"                
                 android:text="@string/less_organic_btn" />
 
             <RadioButton
@@ -132,7 +129,180 @@
                 android:text="@string/more_organic_btn" />
                        
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/soilTestPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/soil_test_prompt" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/phosphateSpn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/phosphatePrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/phosphateSpn"
+                android:text="@string/phosphate_prompt"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Spinner
+                android:id="@+id/potashSpn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/potashPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/potashSpn"
+                android:text="@string/potash_prompt"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/calculateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/calculate_btn" />
+
+        <TextView
+            android:id="@+id/suggestedCropRatesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/suggested_crop_rates_label" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/nitrogenLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/nitrogen_label"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/nitrogenRequirement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/nitrogen_requirement"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/nitrogenUnits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/units"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
         
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/phosphateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/phosphate_prompt"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/phosphateRequirement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/phosphate_requirement"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/phosphateUnits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/units"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/potashLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/potash_prompt"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/potashRequirement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/potash_requirement"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/potashUnits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/units"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>       
+
+        <CheckBox
+            android:id="@+id/convertUnitsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/convert_units_btn" />
+
     </LinearLayout>
     
 </ScrollView>

@@ -8,8 +8,8 @@
     <string name="crop_length_full">Full season</string>
     <string name="crop_sown_prompt">When will the crop be planted?</string>
     <string name="manure_credits_prompt">Will you be applying manure?</string>
-    <string name="manure_type_prompt">What type of manure did you apply?</string>
-    <string name="manure_amount_prompt">How much manure did you apply?</string>
+    <string name="manure_type_prompt">What type of manure will you apply?</string>
+    <string name="manure_amount_prompt">How much manure will you apply?</string>
     <string name="prev_crop_prompt">What crop was sown previously?</string>
     <string name="prev_crop_stand_prompt">How would you rate the previous crop stand?</string>
     <string name="poor_btn">Poor</string>

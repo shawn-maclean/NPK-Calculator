@@ -31,27 +31,49 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	int checkedCropLengthBtn, checkedCropStandBtn, checkedOrganicMatterBtn;
 	int selectedCrop, selectedPrevCrop, selectedBaseN, baseValueN;
 	
-	int[] baseValueNitrogen = {50, 40, 60, 50, 150, 150, 35, 150, 100, 150, 150, 60, 150, 35, 130, 120, 130, 60, 75, 50, 20, 20, 100,
+	final int[] baseValueNitrogen = {50, 40, 60, 50, 150, 150, 35, 150, 100, 150, 150, 60, 150, 35, 130, 120, 130, 60, 75, 50, 20, 20, 100,
 							  110, 75, 75, 20, 20, 20, 20, 150, 75, 40, 50, 50, 30, 120, 100, 80, 155, 155, 155, 155, 155,
 							  155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 80,
-							  60, 135, 150, 45, 50, 20, 100, 80, 150, 100, 60, 60, 20};
+							  60, 135, 150, 45, 50, 20, 100, 80, 150, 100, 60, 60, 20};	
 	
-	int[][] swineManureTable = {{30, 9, 10}, {17, 9, 22}};
-	int[][] dairyManureTable = {{23, 6, 20}, {13, 4, 12}};
-	int[][] poultryManureTable= {{32, 35, 34}, {18, 26, 16}};
+	final int[][] barleyPK = {{100, 75, 50, 50, 25, 25}, {100, 100, 75, 50, 25, 0}};
+	final int[][] beanPK = {{100, 60, 45, 45, 30, 0}, {100, 75, 50, 40, 25, 0}};
+	final int[][] beetPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
+	final int[][] blueberryPK = {{50, 50, 25, 25, 0, 0}, {50, 50, 25, 25, 0, 0}};
+	final int[][] broccoliPK = {{400, 300, 200, 200, 150, 100}, {220, 150, 150, 150, 100, 50}};
+	final int[][] buckwheatPK = {{80, 60, 30, 30, 30, 15}, {80, 60, 30, 30, 30, 0}};
+	final int[][] carrotPK = {{300, 200, 150, 150, 100, 50}, {200, 200, 150, 150, 100, 50}};
+	final int[][] celeryPK = {{300, 250, 200, 175, 150, 75}, {400, 350, 250, 200, 150, 100}};
+	final int[][] cerealPK = {{134, 101, 50, 50, 34, 34}, {134, 134, 84, 67, 34, 0}};
+	final int[][] coniferousPK = {{17, 17, 17, 17, 17, 17}, {34, 34, 34, 34, 34, 34}};
+	final int[][] grainCornPK = {{400, 250, 250, 130, 130, 70}, {400, 250, 250, 130, 130, 70}};
+	final int[][] silageCornPK = {{120, 90, 45, 45, 0, 0}, {200, 150, 100, 75, 50, 0}};
+	final int[][] cranberryPK = {{135, 115, 90, 70, 50, 0}, {135, 115, 90, 70, 50, 0}};
+	final int[][] cucumberPK = {{225, 225, 150, 150, 75, 75}, {150, 100, 75, 75, 50, 0}};
+	final int[][] deciduousPK = {{25, 25, 25, 25, 25, 25}, {50, 50, 50, 50, 50, 50}};
+	final int[][] fallryePK = {{100, 60, 45, 45, 30, 30}, {100, 60, 45, 45, 30, 0}};
+	final int[][] fieldpeaPK = {{120, 80, 60, 60, 40, 0}, {100, 75, 40, 40, 25, 0}};
+	final int[][] fruittreesPK = {{270, 230, 140, 95, 60, 0}, {225, 190, 145, 110, 75, 0}};
+	final int[][] garlicPK = {{250, 220, 180, 140, 85, 50}, {175, 135, 100, 70, 50, 25}};
+	final int[][] grasshayPK = {{75, 60, 50, 40, 15, 0}, {160, 130, 100, 75, 40, 0}};
+	final int[][] greenpeaPK = {{100, 60, 45, 45, 30, 0}, {75, 45, 30, 30, 0, 0}};
+	final int[][] legumehayPK = {{90, 70, 55, 40, 40, 40}, {250, 220, 170, 140, 75, 75}};
+	final int[][] legumepasturePK = {{90, 70, 55, 40, 15, 0}, {250, 220, 170, 140, 75, 0}};
+	final int[][] legumeseededPK = {{140, 120, 100, 80, 80, 40}, {200, 160, 120, 80, 80, 60}};
+	final int[][] lettucePK = {{400, 400, 300, 300, 200, 100}, {220, 220, 150, 150, 150, 100}};
+	final int[][] mixedforagePK = {{130, 110, 85, 60, 32, 0}, {230, 185, 160, 135, 85, 0}};
+	final int[][] mixedgrainPK = {{90, 70, 40, 40, 40, 20}, {90, 70, 45, 30, 30, 0}};
+	final int[][] mixedhayPK = {{75, 60, 50, 40, 15, 0}, {160, 130, 100, 75, 40, 0}};
+	final int[][] oatPK = {{100, 75, 60, 60, 30, 30}, {80, 60, 30, 30, 30, 0}};
+	final int[][] onionPK = {{300, 220, 150, 150, 50, 50}, {220, 120, 90, 90, 60, 45}};
+	final int[][] pepperPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
+	final int[][] potatoPK = {{400, 275, 200, 200, 135, 135}, {270, 200, 135, 135, 135, 135}};
 	
-	int[][] barleyPK = {{100, 75, 50, 50, 25, 25}, {100, 100, 75, 50, 25, 0}};
-	int[][] beanPK = {{100, 60, 45, 45, 30, 0}, {100, 75, 50, 40, 25, 0}};
-	int[][] beetPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
-	int[][] blueberryPK = {{50, 50, 25, 25, 0, 0}, {50, 50, 25, 25, 0, 0}};
-	int[][] broccoliPK = {{400, 300, 200, 200, 150, 100}, {220, 150, 150, 150, 100, 50}};
-	int[][] buckwheatPK = {{80, 60, 30, 30, 30, 15}, {80, 60, 30, 30, 30, 0}};
-	int[][] carrotPK = {{300, 200, 150, 150, 100, 50}, {200, 200, 150, 150, 100, 50}};
-	int[][] celeryPK = {{300, 250, 200, 175, 150, 75}, {400, 350, 250, 200, 150, 100}};
+	
 			
-	double[] poorStand = {0, 0, 0, 8.9, 0};
-	double[] fairStand = {35.6, 17.8, 8.9, 8.9, 0};
-	double[] goodStand = {71.2, 35.6, 17.8, 8.9, -13.35};	
+	final double[] poorStand = {0, 0, 0, 8.9, 0};
+	final double[] fairStand = {35.6, 17.8, 8.9, 8.9, 0};
+	final double[] goodStand = {71.2, 35.6, 17.8, 8.9, -13.35};	
 	    
 	/** Called when the activity is first created. */
     @Override
@@ -130,9 +152,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			if (manureCredits.isChecked())
 				getManureCredits();
 			else {
-				manureNitrogen = 0.0;
-				manurePhosphate = 0.0;
-				manurePotash = 0.0;
+				clearManureCredits();
 			}
 			
 			calculateNitrogenRequirement();
@@ -167,15 +187,19 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		String manureEnteredStr = manureAmount.getText().toString();
 		
 		if (manureEnteredStr == null) {
-			manureNitrogen = 0.0;
-			manurePhosphate = 0.0;
-			manurePotash = 0.0;
+			clearManureCredits();
 		} else {
 			double manureEntered = Double.parseDouble(manureEnteredStr);
 			manureNitrogen = manureEntered * N / denominator;
 			manurePhosphate = manureEntered * P / denominator;
 			manurePotash = manureEntered * K / denominator;
 		}	
+	}
+	
+	private void clearManureCredits() {
+		manureNitrogen = 0.0;
+		manurePhosphate = 0.0;
+		manurePotash = 0.0;
 	}
 	
 	public void calculateNitrogenRequirement() {
@@ -246,7 +270,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	}
 
 	private void calculatePhosphateRequirement() {	
-		double phosphateReqValue = getPhosphate();
+		double phosphateReqValue = getPhosphate() - manurePhosphate;
 		
 		if (convertUnitsBox.isChecked())
 			phosphateReqValue = phosphateReqValue / 0.89;			
@@ -281,6 +305,20 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			break;
 		case 10: phosphateValue = (double) celeryPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
+		case 11: phosphateValue = (double) cerealPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 12: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 13: phosphateValue = (double) coniferousPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 14: phosphateValue = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 15: phosphateValue = (double) silageCornPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 16: phosphateValue = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 17: phosphateValue = (double) cranberryPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
 			
 		}
 		
@@ -288,7 +326,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	}
 	
 	private void calculatePotashRequirement() {
-		double potashReqValue = getPotash();
+		double potashReqValue = getPotash() - manurePotash;
 		
 		if (convertUnitsBox.isChecked())
 			potashReqValue = potashReqValue / 0.89;

@@ -8,6 +8,7 @@
     <string name="crop_length_full">Full season</string>
     <string name="crop_sown_prompt">When will the crop be planted?</string>
     <string name="manure_credits_prompt">Will you be applying manure?</string>
+    <string name="manure_credits_checkbox">Yes</string>
     <string name="manure_type_prompt">What type of manure will you apply?</string>
     <string name="manure_amount_prompt">How much manure will you apply?</string>
     <string name="prev_crop_prompt">What crop was sown previously?</string>
@@ -45,7 +46,9 @@
 	    <item>Cereal</item>
 	    <item>Cole Crop</item>
 	    <item>Coniferous</item>
-	    <item>Corn</item>
+	    <item>Corn - Grain</item>
+	    <item>Corn - Silage</item>
+	    <item>Corn - Sweet</item>
 	    <item>Cranberry</item>
 	    <item>Cucumber</item>
 	    <item>Deciduous</item>
@@ -100,14 +103,11 @@
 	    <item>Soybean</item>
 	    <item>Spinach</item>
 	    <item>Squash</item>
-	    <item>Strawberry - New</item>
-	    <item>Strawberry - Ren</item>
-	    <item>Sweet Corn</item>
-	    <item>Grain Corn</item>
+	    <item>Strawberry - New</item>	    
 	    <item>Tomato</item>	    
-	    <item>Milling Wheat</item>
 	    <item>Wheat</item>
-	    <item>Winter Wheat</item>
+	    <item>Wheat - Milling</item>
+	    <item>Wheat - Winter</item>
 	</string-array>
 	
 	<string-array name="prevCrops">

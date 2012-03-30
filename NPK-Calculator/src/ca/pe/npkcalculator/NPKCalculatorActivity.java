@@ -16,18 +16,23 @@ import android.widget.TextView;
 public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	
 	Button calculateBtn;
-	CheckBox manureCredits;
+	CheckBox manureCredits, convertUnitsBox;
 	DatePicker cropSownDatePicker;
 	Double nitrogenReqValue, cropLengthModifier;
 	EditText manureAmount;
 	RadioGroup cropLengthRadioGroup, organicMatterRadioGroup, cropStandRadioGroup;
 	Spinner cropSelectionSpn, prevCropSpn, phosphateSpn, potashSpn, manureTypeSpn;
-	TextView manureTypePrompt, manureAmountPrompt, nitrogenRequirement, phosphateRequirement, potashRequirement;
+	TextView manureTypePrompt, manureAmountPrompt, nitrogenRequirement, phosphateRequirement, potashRequirement, 
+			 nitrogenUnits, phosphateUnits, potashUnits;
+	Boolean convertUnitsBln = false;
 	
 	int checkedCropLengthBtn, checkedCropStandBtn, checkedOrganicMatterBtn, plantingDateModifier, organicMatterModifier;
 	int selectedPrevCrop, selectedBaseN, baseValueN, cropStandModifier;
 	
-	int[] baseValueNitrogen = {56, 45, 67, 56, 168, 168, 39};
+	int[] baseValueNitrogen = {56, 45, 67, 56, 168, 168, 39, 168, 112, 168, 168, 67, 168, 39, 146, 134, 146, 67, 84, 56, 22, 22, 112,
+							  123, 84, 84, 22, 22, 22, 22, 168, 84, 45, 56, 56, 34, 134, 112, 90, 174, 174, 174, 174, 174,
+							  174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 90,
+							  67, 151, 168, 50, 56, 22, 112, 90, 168, 112, 67, 67, 22};
 	
 	int[] poorStand = {0, 0, 0, 10, 0};
 	int[] fairStand = {40, 20, 10, 10, 0};
@@ -76,9 +81,14 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
         nitrogenRequirement = (TextView) findViewById(R.id.nitrogenRequirement);
         phosphateRequirement = (TextView) findViewById(R.id.phosphateRequirement);
         potashRequirement = (TextView) findViewById(R.id.potashRequirement);
-        
+        convertUnitsBox = (CheckBox) findViewById(R.id.convertUnitsBox);
+        nitrogenUnits = (TextView) findViewById(R.id.nitrogenUnits);
+        phosphateUnits = (TextView) findViewById(R.id.phosphateUnits);
+        potashUnits = (TextView) findViewById(R.id.potashUnits);        
+        		
         manureCredits.setOnClickListener(this);
-        calculateBtn.setOnClickListener(this);        
+        calculateBtn.setOnClickListener(this);
+        convertUnitsBox.setOnClickListener(this);
         
     }    
 
@@ -103,35 +113,30 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			calculateNitrogenRequirement();			
 		}
 		
+		if (v == convertUnitsBox) {
+			convertUnits();
+		}
+		
 	}
 	
 	public void calculateNitrogenRequirement() {
-		getBaseNitrogen();
+		baseValueN = baseValueNitrogen[cropSelectionSpn.getSelectedItemPosition()];
 		getCropLength();
 		getPlantingDate();
 		getCropStand();
 		getOrganicMatter();
 		
 		nitrogenReqValue = baseValueN * cropLengthModifier - plantingDateModifier - cropStandModifier - organicMatterModifier;
-		
-		String nitrogenReqFS = String.format("%.1f", nitrogenReqValue);
-		
-		//nitrogenRequirement.setText(nitrogenReqFS);		
-		//nitrogenRequirement.setText("" + cropSownDatePicker.getMonth());
-		nitrogenRequirement.setText("" + baseValueN);		
-	}
+				
+		if (convertUnitsBox.isChecked())
+			nitrogenReqValue = nitrogenReqValue * 0.89;			
+				
+		nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+		//convertUnits();
+	}		
 	
-	public void getBaseNitrogen() {
-		selectedBaseN = cropSelectionSpn.getSelectedItemPosition();
-		
-		baseValueN = baseValueNitrogen[selectedBaseN];
-		// TO DO
-	}
-	
-	public void getCropLength() {
-		checkedCropLengthBtn = cropLengthRadioGroup.getCheckedRadioButtonId();
-		
-		switch (checkedCropLengthBtn) {
+	public void getCropLength() {		
+		switch (cropLengthRadioGroup.getCheckedRadioButtonId()) {
 		  case R.id.cropLengthEarly : cropLengthModifier = 0.9;
 		  	break;
 		  case R.id.cropLengthFull : cropLengthModifier = 1.0;
@@ -156,26 +161,21 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		} else plantingDateModifier = 0;
 	}
 	
-	public void getCropStand() {
-		checkedCropStandBtn = cropStandRadioGroup.getCheckedRadioButtonId();
-		selectedPrevCrop = prevCropSpn.getSelectedItemPosition(); 
-		
-		switch (checkedCropStandBtn) {
-		  case R.id.poorBtn : cropStandModifier = poorStand[selectedPrevCrop];
+	public void getCropStand() {		
+		switch (cropStandRadioGroup.getCheckedRadioButtonId()) {
+		  case R.id.poorBtn : cropStandModifier = poorStand[prevCropSpn.getSelectedItemPosition()];
 		  	break;
-		  case R.id.fairBtn : cropStandModifier = fairStand[selectedPrevCrop];
+		  case R.id.fairBtn : cropStandModifier = fairStand[prevCropSpn.getSelectedItemPosition()];
 		  	break;
-		  case R.id.goodBtn : cropStandModifier = goodStand[selectedPrevCrop];
+		  case R.id.goodBtn : cropStandModifier = goodStand[prevCropSpn.getSelectedItemPosition()];
 		  	break;
 		  default : cropStandModifier = 0;
 		  	break;
 		}		
 	}
 	
-	public void getOrganicMatter() {
-		checkedOrganicMatterBtn = organicMatterRadioGroup.getCheckedRadioButtonId();
-		
-		switch (checkedOrganicMatterBtn) {
+	public void getOrganicMatter() {		
+		switch (organicMatterRadioGroup.getCheckedRadioButtonId()) {
 		  case R.id.lessOrganicBtn : organicMatterModifier = 0;
 		  	break;
 		  case R.id.moreOrganicBtn : organicMatterModifier = 15;
@@ -183,6 +183,30 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		  default : organicMatterModifier = 0;
 		  	break;
 		}
+	}
+	
+	public void calculatePhosphateRequirement() {
+		
+	}
+	
+	public void convertUnits() {
+		if (convertUnitsBox.isChecked()) {
+			calculateNitrogenRequirement();
+			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			nitrogenUnits.setText("lb/ac");
+			phosphateUnits.setText("lb/ac");
+			potashUnits.setText("lb/ac");
+		} else {
+			calculateNitrogenRequirement();
+			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			nitrogenUnits.setText("kg/ha");
+			phosphateUnits.setText("kg/ha");
+			potashUnits.setText("kg/ha");
+		}						
+	}
+	
+	private String formattedString (double d) {
+		return String.format("%.1f", d);		
 	}
     
 }

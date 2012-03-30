@@ -549,15 +549,15 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
 			calculatePotashRequirement();
-			//nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			
 			nitrogenUnits.setText("kg/ha");
 			phosphateUnits.setText("kg/ha");
 			potashUnits.setText("kg/ha");			
 		} else {
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
-			calculatePotashRequirement();
-			//nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			calculatePotashRequirement();			
+			
 			nitrogenUnits.setText("lb/ac");
 			phosphateUnits.setText("lb/ac");
 			potashUnits.setText("lb/ac");

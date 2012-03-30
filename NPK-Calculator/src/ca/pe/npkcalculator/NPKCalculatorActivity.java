@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	Spinner cropSelectionSpn, prevCropSpn, phosphateSpn, potashSpn, manureTypeSpn;
 	TextView manureTypePrompt, manureAmountPrompt, nitrogenRequirement, phosphateRequirement, potashRequirement, 
 			 nitrogenUnits, phosphateUnits, potashUnits;
+	ScrollView scrollView;
 	Boolean convertUnitsBln = false;
 	
 	int checkedCropLengthBtn, checkedCropStandBtn, checkedOrganicMatterBtn;
@@ -68,7 +70,19 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	final int[][] onionPK = {{300, 220, 150, 150, 50, 50}, {220, 120, 90, 90, 60, 45}};
 	final int[][] pepperPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
 	final int[][] potatoPK = {{400, 275, 200, 200, 135, 135}, {270, 200, 135, 135, 135, 135}};
-	
+	final int[][] pumpkinPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
+	final int[][] radishPK = {{150, 100, 60, 50, 40, 20}, {100, 75, 50, 40, 25, 0}};
+	final int[][] raspberryPK = {{135, 115, 90, 70, 50, 0}, {135, 115, 90, 70, 50, 0}};
+	final int[][] rhubarbPK = {{300, 200, 150, 125, 100, 50}, {300, 250, 175, 150, 100, 75}};
+	final int[][] rutabagaPK = {{200, 200, 150, 150, 90, 90}, {180, 180, 90, 90, 45, 45}};
+	final int[][] ryegrassPK = {{140, 120, 100, 80, 80, 40}, {200, 150, 100, 100, 100, 50}};
+	final int[][] soybeanPK = {{120, 80, 60, 60, 40, 40}, {100, 75, 40, 40, 25, 0}};
+	final int[][] spinachPK = {{150, 100, 60, 50, 40, 20}, {300, 250, 175, 150, 100, 75}};
+	final int[][] strawberryPK = {{200, 160, 115, 75, 40, 0}, {150, 125, 80, 60, 35, 0}};
+	final int[][] tomatoPK = {{350, 250, 200, 175, 150, 75}, {350, 250, 175, 150, 100, 75}};
+	final int[][] wheatPK = {{120, 90, 45, 45, 30, 30}, {120, 120, 75, 60, 30, 0}};
+	final int[][] millingwheatPK = {{100, 60, 45, 45, 30, 30}, {100, 100, 60, 45, 30, 0}};
+	final int[][] winterwheatPK = {{100, 60, 45, 45, 30, 30}, {100, 60, 45, 30, 30, 0}};
 	
 			
 	final double[] poorStand = {0, 0, 0, 8.9, 0};
@@ -80,6 +94,8 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
                 
         cropSelectionSpn = (Spinner) findViewById(R.id.cropSelectionSpn);        
         ArrayAdapter<CharSequence> cropSelectionAdapter = ArrayAdapter.createFromResource(this, R.array.cropsToSelect, android.R.layout.simple_spinner_item);
@@ -157,7 +173,11 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
-			calculatePotashRequirement();
+			calculatePotashRequirement();			
+			
+			scrollView.setSmoothScrollingEnabled(true);
+			//scrollView.smoothScrollTo(0, scrollView.getMaxScrollAmount());
+			scrollView.fullScroll(ScrollView.FOCUS_DOWN);
 		}
 		
 		if (v == convertUnitsBox) {
@@ -280,49 +300,121 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	}
 	
 	private double getPhosphate() {
-		double phosphateValue = 0;
+		double phosphate = 0;
 		
 		switch (selectedCrop) {
-		case 0: phosphateValue = (double) barleyPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 0: phosphate = (double) barleyPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 1: phosphateValue = (double) beanPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 1: phosphate = (double) beanPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 2: phosphateValue = (double) beetPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 2: phosphate = (double) beetPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 3: phosphateValue = (double) blueberryPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 3: phosphate = (double) blueberryPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 4: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 4: phosphate = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 5: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 5: phosphate = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 6: phosphateValue = (double) buckwheatPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 6: phosphate = (double) buckwheatPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 7: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 7: phosphate = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 8: phosphateValue = (double) carrotPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 8: phosphate = (double) carrotPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 9: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 9: phosphate = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 10: phosphateValue = (double) celeryPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 10: phosphate = (double) celeryPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 11: phosphateValue = (double) cerealPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 11: phosphate = (double) cerealPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 12: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 12: phosphate = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 13: phosphateValue = (double) coniferousPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 13: phosphate = (double) coniferousPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 14: phosphateValue = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 14: phosphate = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 15: phosphateValue = (double) silageCornPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 15: phosphate = (double) silageCornPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 16: phosphateValue = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 16: phosphate = (double) grainCornPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-		case 17: phosphateValue = (double) cranberryPK[0][phosphateSpn.getSelectedItemPosition()];
+		case 17: phosphate = (double) cranberryPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
-			
+		case 18: phosphate = (double) cucumberPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 19: phosphate = (double) deciduousPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 20: phosphate = (double) fallryePK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 21: phosphate = (double) fieldpeaPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 22: phosphate = (double) fruittreesPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 23: phosphate = (double) garlicPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 24: phosphate = (double) grasshayPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 25: phosphate = (double) grasshayPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 26: phosphate = (double) greenpeaPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 27: phosphate = (double) legumehayPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 28: phosphate = (double) legumepasturePK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 29: phosphate = (double) legumeseededPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 30: phosphate = (double) lettucePK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 31: phosphate = (double) mixedforagePK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 32: phosphate = (double) mixedgrainPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 33: phosphate = (double) mixedhayPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 34: phosphate = (double) mixedhayPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 35: phosphate = (double) oatPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 36: phosphate = (double) onionPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 37: phosphate = (double) carrotPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 38: phosphate = (double) pepperPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 62: phosphate = (double) pumpkinPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 63: phosphate = (double) radishPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 64: phosphate = (double) raspberryPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 65: phosphate = (double) rhubarbPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 66: phosphate = (double) rutabagaPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 67: phosphate = (double) ryegrassPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 68: phosphate = (double) soybeanPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 69: phosphate = (double) spinachPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 70: phosphate = (double) pumpkinPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 71: phosphate = (double) strawberryPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 72: phosphate = (double) tomatoPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 73: phosphate = (double) wheatPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 74: phosphate = (double) millingwheatPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 75: phosphate = (double) winterwheatPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
 		}
 		
-		return phosphateValue;
+		if (selectedCrop >= 39 && selectedCrop <= 61)
+			phosphate = (double) potatoPK[0][phosphateSpn.getSelectedItemPosition()];
+		
+		return phosphate;
 	}
 	
 	private void calculatePotashRequirement() {
@@ -353,14 +445,101 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		case 6: potash = (double) buckwheatPK[1][potashSpn.getSelectedItemPosition()];
 			break;
 		case 7: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
-			break;		
+			break;
 		case 8: potash = (double) carrotPK[1][potashSpn.getSelectedItemPosition()];
-			break;		
+			break;
 		case 9: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
-			break;	
+			break;
 		case 10: potash = (double) celeryPK[1][potashSpn.getSelectedItemPosition()];
 			break;
+		case 11: potash = (double) cerealPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 12: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 13: potash = (double) coniferousPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 14: potash = (double) grainCornPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 15: potash = (double) silageCornPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 16: potash = (double) grainCornPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 17: potash = (double) cranberryPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 18: potash = (double) cucumberPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 19: potash = (double) deciduousPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 20: potash = (double) fallryePK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 21: potash = (double) fieldpeaPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 22: potash = (double) fruittreesPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 23: potash = (double) garlicPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 24: potash = (double) grasshayPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 25: potash = (double) grasshayPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 26: potash = (double) greenpeaPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 27: potash = (double) legumehayPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 28: potash = (double) legumepasturePK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 29: potash = (double) legumeseededPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 30: potash = (double) lettucePK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 31: potash = (double) mixedforagePK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 32: potash = (double) mixedgrainPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 33: potash = (double) mixedhayPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 34: potash = (double) mixedhayPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 35: potash = (double) oatPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 36: potash = (double) onionPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 37: potash = (double) carrotPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 38: potash = (double) pepperPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 62: potash = (double) pumpkinPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 63: potash = (double) radishPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 64: potash = (double) raspberryPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 65: potash = (double) rhubarbPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 66: potash = (double) rutabagaPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 67: potash = (double) ryegrassPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 68: potash = (double) soybeanPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 69: potash = (double) spinachPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 70: potash = (double) pumpkinPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 71: potash = (double) strawberryPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 72: potash = (double) tomatoPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 73: potash = (double) wheatPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 74: potash = (double) millingwheatPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 75: potash = (double) winterwheatPK[1][potashSpn.getSelectedItemPosition()];
+			break;
 		}
+		
+		if (selectedCrop >= 39 && selectedCrop <= 61)
+			potash = (double) potatoPK[1][potashSpn.getSelectedItemPosition()];
 		
 		return potash;
 	}
@@ -370,7 +549,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
 			calculatePotashRequirement();
-			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			//nitrogenRequirement.setText(formattedString(nitrogenReqValue));
 			nitrogenUnits.setText("kg/ha");
 			phosphateUnits.setText("kg/ha");
 			potashUnits.setText("kg/ha");			
@@ -378,7 +557,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
 			calculatePotashRequirement();
-			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			//nitrogenRequirement.setText(formattedString(nitrogenReqValue));
 			nitrogenUnits.setText("lb/ac");
 			phosphateUnits.setText("lb/ac");
 			potashUnits.setText("lb/ac");

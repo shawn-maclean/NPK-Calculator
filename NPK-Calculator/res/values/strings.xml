@@ -28,7 +28,7 @@
 	<string name="nitrogen_requirement">0.0</string>	
 	<string name="phosphate_requirement">0.0</string>
 	<string name="potash_requirement">0.0</string>
-	<string name="units">kg/ha</string>
+	<string name="units">lb/ac</string>
 	<string name="convert_units_btn">Convert units</string>
 	
 	<string-array name="cropsToSelect">

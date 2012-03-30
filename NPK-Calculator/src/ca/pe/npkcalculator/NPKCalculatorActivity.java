@@ -18,7 +18,7 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	Button calculateBtn;
 	CheckBox manureCredits, convertUnitsBox;
 	DatePicker cropSownDatePicker;
-	Double nitrogenReqValue, cropLengthModifier;
+	Double nitrogenReqValue, cropLengthModifier, organicMatterModifier, plantingDateModifier, cropStandModifier;
 	EditText manureAmount;
 	RadioGroup cropLengthRadioGroup, organicMatterRadioGroup, cropStandRadioGroup;
 	Spinner cropSelectionSpn, prevCropSpn, phosphateSpn, potashSpn, manureTypeSpn;
@@ -26,17 +26,21 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			 nitrogenUnits, phosphateUnits, potashUnits;
 	Boolean convertUnitsBln = false;
 	
-	int checkedCropLengthBtn, checkedCropStandBtn, checkedOrganicMatterBtn, plantingDateModifier, organicMatterModifier;
-	int selectedPrevCrop, selectedBaseN, baseValueN, cropStandModifier;
+	int checkedCropLengthBtn, checkedCropStandBtn, checkedOrganicMatterBtn;
+	int selectedCrop, selectedPrevCrop, selectedBaseN, baseValueN;
 	
-	int[] baseValueNitrogen = {56, 45, 67, 56, 168, 168, 39, 168, 112, 168, 168, 67, 168, 39, 146, 134, 146, 67, 84, 56, 22, 22, 112,
-							  123, 84, 84, 22, 22, 22, 22, 168, 84, 45, 56, 56, 34, 134, 112, 90, 174, 174, 174, 174, 174,
-							  174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 174, 90,
-							  67, 151, 168, 50, 56, 22, 112, 90, 168, 112, 67, 67, 22};
+	int[] baseValueNitrogen = {50, 40, 60, 50, 150, 150, 35, 150, 100, 150, 150, 60, 150, 35, 130, 120, 130, 60, 75, 50, 20, 20, 100,
+							  110, 75, 75, 20, 20, 20, 20, 150, 75, 40, 50, 50, 30, 120, 100, 80, 155, 155, 155, 155, 155,
+							  155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 80,
+							  60, 135, 150, 45, 50, 20, 100, 80, 150, 100, 60, 60, 20};
 	
-	int[] poorStand = {0, 0, 0, 10, 0};
-	int[] fairStand = {40, 20, 10, 10, 0};
-	int[] goodStand = {80, 40, 20, 10, -15};	
+	int[][] barleyPK = {{100, 75, 50, 50, 25, 25}, {100, 100, 75, 50, 25, 0}};
+	int[][] beanPK = {{100, 60, 45, 45, 30, 0}, {100, 75, 50, 40, 25, 0}};
+	int[][] beetPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
+			
+	double[] poorStand = {0, 0, 0, 8.9, 0};
+	double[] fairStand = {35.6, 17.8, 8.9, 8.9, 0};
+	double[] goodStand = {71.2, 35.6, 17.8, 8.9, -13.35};	
 	    
 	/** Called when the activity is first created. */
     @Override
@@ -109,8 +113,11 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	    	}	    		
 		}
 		
-		if (v == calculateBtn) {			
-			calculateNitrogenRequirement();			
+		if (v == calculateBtn) {
+			selectedCrop = cropSelectionSpn.getSelectedItemPosition();
+			calculateNitrogenRequirement();
+			calculatePhosphateRequirement();
+			calculatePotashRequirement();
 		}
 		
 		if (v == convertUnitsBox) {
@@ -120,19 +127,19 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	}
 	
 	public void calculateNitrogenRequirement() {
-		baseValueN = baseValueNitrogen[cropSelectionSpn.getSelectedItemPosition()];
 		getCropLength();
 		getPlantingDate();
 		getCropStand();
 		getOrganicMatter();
 		
+		baseValueN = baseValueNitrogen[selectedCrop];
+		
 		nitrogenReqValue = baseValueN * cropLengthModifier - plantingDateModifier - cropStandModifier - organicMatterModifier;
 				
 		if (convertUnitsBox.isChecked())
-			nitrogenReqValue = nitrogenReqValue * 0.89;			
+			nitrogenReqValue = nitrogenReqValue / 0.89;			
 				
-		nitrogenRequirement.setText(formattedString(nitrogenReqValue));
-		//convertUnits();
+		nitrogenRequirement.setText(formattedString(nitrogenReqValue));		
 	}		
 	
 	public void getCropLength() {		
@@ -148,17 +155,17 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	
 	public void getPlantingDate() {
 		if (cropSownDatePicker.getMonth() <= 4 && cropSownDatePicker.getDayOfMonth() <= 25) {
-			plantingDateModifier = 0;
+			plantingDateModifier = 0.0;
 		} else if (cropSownDatePicker.getMonth() >= 5 && cropSownDatePicker.getDayOfMonth() >= 9) {
-			plantingDateModifier = 33;
+			plantingDateModifier = 29.37;
 		} else if (cropSownDatePicker.getMonth() == 5) {
 			if (cropSownDatePicker.getDayOfMonth() >= 2 && cropSownDatePicker.getDayOfMonth() <= 8)	{
-				plantingDateModifier = 22;
-			} else plantingDateModifier = 11;
+				plantingDateModifier = 19.58;
+			} else plantingDateModifier = 9.79;
 		} else if (cropSownDatePicker.getMonth() == 4) {
 			if (cropSownDatePicker.getDayOfMonth() >= 26)
-				plantingDateModifier = 11;
-		} else plantingDateModifier = 0;
+				plantingDateModifier = 9.79;
+		} else plantingDateModifier = 0.0;
 	}
 	
 	public void getCropStand() {		
@@ -169,39 +176,88 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		  	break;
 		  case R.id.goodBtn : cropStandModifier = goodStand[prevCropSpn.getSelectedItemPosition()];
 		  	break;
-		  default : cropStandModifier = 0;
+		  default : cropStandModifier = 0.0;
 		  	break;
 		}		
 	}
 	
 	public void getOrganicMatter() {		
 		switch (organicMatterRadioGroup.getCheckedRadioButtonId()) {
-		  case R.id.lessOrganicBtn : organicMatterModifier = 0;
+		  case R.id.lessOrganicBtn : organicMatterModifier = 0.0;
 		  	break;
-		  case R.id.moreOrganicBtn : organicMatterModifier = 15;
+		  case R.id.moreOrganicBtn : organicMatterModifier = 13.35;
 		  	break;
-		  default : organicMatterModifier = 0;
+		  default : organicMatterModifier = 0.0;
 		  	break;
 		}
 	}
-	
-	public void calculatePhosphateRequirement() {
+
+	private void calculatePhosphateRequirement() {	
+		double phosphateReqValue = getPhosphate();
+		
+		if (convertUnitsBox.isChecked())
+			phosphateReqValue = phosphateReqValue / 0.89;			
+				
+		phosphateRequirement.setText(formattedString(phosphateReqValue));
 		
 	}
 	
-	public void convertUnits() {
+	private double getPhosphate() {
+		double phosphateValue = 0;
+		
+		switch (selectedCrop) {
+		case 0: phosphateValue = (double) barleyPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 1: phosphateValue = (double) beanPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 2: phosphateValue = (double) beetPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		}
+		
+		return phosphateValue;
+	}
+	
+	private void calculatePotashRequirement() {
+		double potashReqValue = getPotash();
+		
+		if (convertUnitsBox.isChecked())
+			potashReqValue = potashReqValue / 0.89;
+		
+		potashRequirement.setText(formattedString(potashReqValue));
+	}
+	
+	private double getPotash() {
+		double potash = 0;
+		
+		switch (selectedCrop) {
+		case 0: potash = (double) barleyPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 1: potash = (double) beanPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 2: potash = (double) beetPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		}
+		
+		return potash;
+	}
+	
+	private void convertUnits() {
 		if (convertUnitsBox.isChecked()) {
 			calculateNitrogenRequirement();
+			calculatePhosphateRequirement();
+			calculatePotashRequirement();
+			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
+			nitrogenUnits.setText("kg/ha");
+			phosphateUnits.setText("kg/ha");
+			potashUnits.setText("kg/ha");			
+		} else {
+			calculateNitrogenRequirement();
+			calculatePhosphateRequirement();
+			calculatePotashRequirement();
 			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
 			nitrogenUnits.setText("lb/ac");
 			phosphateUnits.setText("lb/ac");
 			potashUnits.setText("lb/ac");
-		} else {
-			calculateNitrogenRequirement();
-			nitrogenRequirement.setText(formattedString(nitrogenReqValue));
-			nitrogenUnits.setText("kg/ha");
-			phosphateUnits.setText("kg/ha");
-			potashUnits.setText("kg/ha");
 		}						
 	}
 	

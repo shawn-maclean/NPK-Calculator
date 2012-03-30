@@ -18,7 +18,9 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 	Button calculateBtn;
 	CheckBox manureCredits, convertUnitsBox;
 	DatePicker cropSownDatePicker;
-	Double nitrogenReqValue, cropLengthModifier, organicMatterModifier, plantingDateModifier, cropStandModifier;
+	Double nitrogenReqValue, cropLengthModifier, organicMatterModifier, plantingDateModifier, cropStandModifier,
+		   manureNitrogen = 0.0, manurePhosphate = 0.0,	manurePotash = 0.0;
+	
 	EditText manureAmount;
 	RadioGroup cropLengthRadioGroup, organicMatterRadioGroup, cropStandRadioGroup;
 	Spinner cropSelectionSpn, prevCropSpn, phosphateSpn, potashSpn, manureTypeSpn;
@@ -34,9 +36,18 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 							  155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 155, 80,
 							  60, 135, 150, 45, 50, 20, 100, 80, 150, 100, 60, 60, 20};
 	
+	int[][] swineManureTable = {{30, 9, 10}, {17, 9, 22}};
+	int[][] dairyManureTable = {{23, 6, 20}, {13, 4, 12}};
+	int[][] poultryManureTable= {{32, 35, 34}, {18, 26, 16}};
+	
 	int[][] barleyPK = {{100, 75, 50, 50, 25, 25}, {100, 100, 75, 50, 25, 0}};
 	int[][] beanPK = {{100, 60, 45, 45, 30, 0}, {100, 75, 50, 40, 25, 0}};
 	int[][] beetPK = {{300, 200, 150, 125, 100, 50}, {225, 175, 125, 100, 75, 25}};
+	int[][] blueberryPK = {{50, 50, 25, 25, 0, 0}, {50, 50, 25, 25, 0, 0}};
+	int[][] broccoliPK = {{400, 300, 200, 200, 150, 100}, {220, 150, 150, 150, 100, 50}};
+	int[][] buckwheatPK = {{80, 60, 30, 30, 30, 15}, {80, 60, 30, 30, 30, 0}};
+	int[][] carrotPK = {{300, 200, 150, 150, 100, 50}, {200, 200, 150, 150, 100, 50}};
+	int[][] celeryPK = {{300, 250, 200, 175, 150, 75}, {400, 350, 250, 200, 150, 100}};
 			
 	double[] poorStand = {0, 0, 0, 8.9, 0};
 	double[] fairStand = {35.6, 17.8, 8.9, 8.9, 0};
@@ -115,6 +126,15 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		
 		if (v == calculateBtn) {
 			selectedCrop = cropSelectionSpn.getSelectedItemPosition();
+			
+			if (manureCredits.isChecked())
+				getManureCredits();
+			else {
+				manureNitrogen = 0.0;
+				manurePhosphate = 0.0;
+				manurePotash = 0.0;
+			}
+			
 			calculateNitrogenRequirement();
 			calculatePhosphateRequirement();
 			calculatePotashRequirement();
@@ -126,6 +146,38 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		
 	}
 	
+	private void getManureCredits() {
+		switch (manureTypeSpn.getSelectedItemPosition()) {
+		case 0: applyManureCredits(30, 9, 10, 1000);
+			break;
+		case 1: applyManureCredits(17, 9, 22, 1);
+			break;
+		case 2: applyManureCredits(23, 6, 20, 1000);
+			break;
+		case 3: applyManureCredits(13, 4, 12, 1);
+			break;
+		case 4: applyManureCredits(32, 35, 34, 1000);
+			break;
+		case 5: applyManureCredits(18, 26, 16, 1);
+			break;
+		}
+	}
+	
+	private void applyManureCredits(int N, int P, int K, int denominator) {
+		String manureEnteredStr = manureAmount.getText().toString();
+		
+		if (manureEnteredStr == null) {
+			manureNitrogen = 0.0;
+			manurePhosphate = 0.0;
+			manurePotash = 0.0;
+		} else {
+			double manureEntered = Double.parseDouble(manureEnteredStr);
+			manureNitrogen = manureEntered * N / denominator;
+			manurePhosphate = manureEntered * P / denominator;
+			manurePotash = manureEntered * K / denominator;
+		}	
+	}
+	
 	public void calculateNitrogenRequirement() {
 		getCropLength();
 		getPlantingDate();
@@ -134,7 +186,8 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		
 		baseValueN = baseValueNitrogen[selectedCrop];
 		
-		nitrogenReqValue = baseValueN * cropLengthModifier - plantingDateModifier - cropStandModifier - organicMatterModifier;
+		nitrogenReqValue = baseValueN * cropLengthModifier - plantingDateModifier - 
+				                 cropStandModifier - organicMatterModifier - manureNitrogen;
 				
 		if (convertUnitsBox.isChecked())
 			nitrogenReqValue = nitrogenReqValue / 0.89;			
@@ -212,6 +265,23 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 			break;
 		case 2: phosphateValue = (double) beetPK[0][phosphateSpn.getSelectedItemPosition()];
 			break;
+		case 3: phosphateValue = (double) blueberryPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 4: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 5: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 6: phosphateValue = (double) buckwheatPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 7: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 8: phosphateValue = (double) carrotPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 9: phosphateValue = (double) broccoliPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+		case 10: phosphateValue = (double) celeryPK[0][phosphateSpn.getSelectedItemPosition()];
+			break;
+			
 		}
 		
 		return phosphateValue;
@@ -235,6 +305,22 @@ public class NPKCalculatorActivity extends Activity implements OnClickListener {
 		case 1: potash = (double) beanPK[1][potashSpn.getSelectedItemPosition()];
 			break;
 		case 2: potash = (double) beetPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 3: potash = (double) blueberryPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 4: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 5: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 6: potash = (double) buckwheatPK[1][potashSpn.getSelectedItemPosition()];
+			break;
+		case 7: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
+			break;		
+		case 8: potash = (double) carrotPK[1][potashSpn.getSelectedItemPosition()];
+			break;		
+		case 9: potash = (double) broccoliPK[1][potashSpn.getSelectedItemPosition()];
+			break;	
+		case 10: potash = (double) celeryPK[1][potashSpn.getSelectedItemPosition()];
 			break;
 		}
 		
